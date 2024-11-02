@@ -1,28 +1,50 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { fetchContacts, addContact, deleteContact } from './contactsOps';
 
 const initialState = { items: [], isLoading: false, error: null };
 
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState,
-  reducers: {
-    addContact: (state, { payload }) => {
-      state.items.push(payload);
-    },
-    deleteContact: (state, { payload }) => {
-      state.items = state.items.filter(item => item.id !== payload);
-    },
+  extraReducers: builder => {
+    builder
+      .addCase(fetchContacts.fulfilled, (state, { payload }) => {
+        state.items = payload;
+      })
+      .addCase(addContact.fulfilled, (state, { payload }) => {
+        state.items.push(payload);
+      })
+      .addCase(deleteContact.fulfilled, (state, { payload }) => {
+        state.items = state.items.filter(el => el.id !== payload.id);
+      })
+      .addMatcher(
+        action => action.type.endsWith('/fulfilled'),
+        state => {
+          state.isLoading = false;
+        }
+      )
+      .addMatcher(
+        action => action.type.endsWith('/pending'),
+        state => {
+          state.isLoading = true;
+          state.error = false;
+        }
+      )
+      .addMatcher(
+        action => action.type.endsWith('/rejected'),
+        state => {
+          state.isLoading = false;
+          state.error = true;
+        }
+      );
   },
 });
 
-export const { addContact, deleteContact } = contactsSlice.actions;
 export const contactsReducer = contactsSlice.reducer;
 
 export const selectContacts = state => state.contacts.items;
-
-// TODO:
-/* Обробку усіх трьох екшенів(fulfilled, rejected, pending) та зміну даних у стані Redux
- зроби у властивості extraReducers слайсу контактів, а от властивість reducers з нього — прибери. */
+export const selectLoadingContacts = state => state.contacts.isLoading;
+export const selectErrorContacts = state => state.contacts.error;
 
 // TODO:
 /* У файлі слайсу контактів contactsSlice.js створи та експортуй 

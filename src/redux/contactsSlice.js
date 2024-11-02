@@ -1,5 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { fetchContacts, addContact, deleteContact } from './contactsOps';
+import { selectNameFilter } from './filtersSlice';
 
 const initialState = { items: [], isLoading: false, error: null };
 
@@ -46,12 +47,12 @@ export const selectContacts = state => state.contacts.items;
 export const selectLoadingContacts = state => state.contacts.isLoading;
 export const selectErrorContacts = state => state.contacts.error;
 
-// TODO:
-/* У файлі слайсу контактів contactsSlice.js створи та експортуй 
-мемоізований селектор selectFilteredContacts за допомогою функції createSelector.
-
-Селектор повинен залежати від поточних масиву контактів і значення фільтра,
-та повертати відфільтрований масив контактів.
-
-Селектор selectFilteredContacts імпортується у компонент
-списка контактів ContactList.jsx та використовується у useSelector.*/
+export const selectFilteredContacts = createSelector(
+  [selectContacts, selectNameFilter],
+  (contacts, filter) => {
+    const visibleContacts = contacts?.filter(contact =>
+      contact.name.toLowerCase().includes(filter.toLowerCase())
+    );
+    return visibleContacts;
+  }
+);

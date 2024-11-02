@@ -63,34 +63,43 @@ const ContactForm = () => {
         validationSchema={testSchema}
       >
         <Form className={formCss.form}>
-          <label className={formCss.formLabel} htmlFor={nameId}>
-            Name
-          </label>
-          <Field
-            type="text"
-            className={formCss.formInput}
-            id={nameId}
-            name="name"
-            placeholder="Olesia V"
-          ></Field>
-          <ErrorMessage name="name" component="p" className={formCss.error} />
+          <div className={formCss.inputContainer}>
+            <label className={formCss.formLabel} htmlFor={nameId}>
+              Name
+            </label>
+            <Field
+              type="text"
+              className={formCss.formInput}
+              id={nameId}
+              name="name"
+              placeholder="Olesia V"
+            ></Field>
+            <ErrorMessage name="name" component="p" className={formCss.error} />
+          </div>
 
-          <label className={formCss.formLabel} htmlFor={numId}>
-            Number
-          </label>
-          <Field name="number">
-            {({ field }) => (
-              <input
-                {...field}
-                ref={inputRef}
-                type="text"
-                className={formCss.formInput}
-                id={numId}
-                placeholder="000-000-0000"
-              />
-            )}
-          </Field>
-          <ErrorMessage name="number" component="p" className={formCss.error} />
+          <div className={formCss.inputContainer}>
+            <label className={formCss.formLabel} htmlFor={numId}>
+              Number
+            </label>
+            <Field name="number">
+              {({ field }) => (
+                <input
+                  {...field}
+                  ref={inputRef}
+                  type="text"
+                  className={formCss.formInput}
+                  id={numId}
+                  placeholder="000-000-0000"
+                />
+              )}
+            </Field>
+            <ErrorMessage
+              name="number"
+              component="p"
+              className={formCss.error}
+            />
+          </div>
+
           <Button>
             <IoMdPersonAdd size="16" />
             Add contact

@@ -17,11 +17,12 @@
 
 .formWrapper {
   position: relative;
-  width: 240px;
-  height: 250px;
+  width: 270px;
+  height: 270px;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0 auto;
 }
 
 .circles {
@@ -31,8 +32,8 @@
 }
 .circle {
   position: absolute;
-  width: 240px;
-  height: 240px;
+  width: 270px;
+  height: 270px;
   border: 1px solid #fff;
   transition: 0.5s;
 }
@@ -50,10 +51,10 @@
 }
 
 .form {
-  position: relative;
+  position: absolute;
   display: flex;
   flex-direction: column;
-  width: 180px;
+  z-index: 1;
 }
 
 .formLabel {
@@ -88,4 +89,14 @@
 .error {
   color: var(--gradient-color-third);
   font-size: 10px;
+  position: absolute;
+  bottom: -15px;
+  right: 0;
+}
+
+.inputContainer {
+  position: relative;
+  margin-bottom: 5px;
+  display: flex;
+  flex-direction: column;
 }

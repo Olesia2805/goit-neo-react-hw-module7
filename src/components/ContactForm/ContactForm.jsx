@@ -5,7 +5,7 @@ import { IoMdPersonAdd } from 'react-icons/io';
 import { useId } from 'react';
 import * as Yup from 'yup';
 import { useMask } from '@react-input/mask';
-import { addContact } from '../../redux/contactsSlice';
+import { addContact } from '../../redux/contactsOps';
 import { useDispatch } from 'react-redux';
 
 const testSchema = Yup.object().shape({

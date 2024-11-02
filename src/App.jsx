@@ -5,11 +5,24 @@ import SearchBox from './components/SearchBox/SearchBox';
 import ContactList from './components/ContactList/ContactList';
 import Notification from './components/Notification/Notification';
 import appCss from './App.module.css';
-import { useSelector } from 'react-redux';
-import { selectContacts } from '../src/redux/contactsSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchContacts } from './redux/contactsOps';
+import {
+  selectContacts,
+  selectLoadingContacts,
+  selectErrorContacts,
+} from './redux/contactsSlice';
+import { useEffect } from 'react';
 
 const App = () => {
+  const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
+  const isLoading = useSelector(selectLoadingContacts);
+  const error = useSelector(selectErrorContacts);
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   return (
     <Container>

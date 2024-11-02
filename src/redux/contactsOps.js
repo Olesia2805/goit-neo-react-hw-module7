@@ -1,7 +1,40 @@
-// TODO: fetchContacts
-// TODO: addContact
-// TODO: deleteContact
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 
-// TODO:
-/* Для коректного опрацювання помилки HTTP - запиту в середині операцій,
-використай конструкцію try...catch, та у блоці catch поверни результат виклику методу thunkAPI.rejectWithValue. */
+axios.defaults.baseURL = 'https://67265fe4302d03037e6d5cb7.mockapi.io';
+
+export const fetchContacts = createAsyncThunk(
+  'contacts/fetchAll',
+  async (_, thunkAPI) => {
+    try {
+      const response = await axios.get('/contacts');
+      return response.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);
+
+export const addContact = createAsyncThunk(
+  'contacts/addContact',
+  async (newContact, thunkAPI) => {
+    try {
+      const response = await axios.post('/contacts', newContact);
+      return response.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);
+
+export const deleteContact = createAsyncThunk(
+  'contacts/deleteContact',
+  async (contactId, thunkAPI) => {
+    try {
+      const response = await axios.delete(`/contacts/${contactId}`);
+      return response.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);

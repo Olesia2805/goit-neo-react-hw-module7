@@ -7,8 +7,6 @@ import * as Yup from 'yup';
 import { useMask } from '@react-input/mask';
 import { addContact } from '../../redux/contactsSlice';
 import { useDispatch } from 'react-redux';
-// TODO: delete nanoid
-import { nanoid } from 'nanoid';
 
 const testSchema = Yup.object().shape({
   name: Yup.string()
@@ -30,7 +28,7 @@ const ContactForm = () => {
 
   const handleSubmit = (values, actions) => {
     const { name, number } = values;
-    const newContact = { id: nanoid(), name, number };
+    const newContact = { name, number };
     dispatch(addContact(newContact));
     actions.resetForm();
   };

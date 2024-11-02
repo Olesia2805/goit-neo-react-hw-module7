@@ -13,6 +13,8 @@ import {
   selectErrorContacts,
 } from './redux/contactsSlice';
 import { useEffect } from 'react';
+import Loader from './components/Loader/Loader';
+import ErrorNotify from './components/ErrorNotify/ErrorNotify';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -36,7 +38,15 @@ const App = () => {
         <SearchBox />
       </Section>
       <Section>
-        {contacts.length > 0 ? <ContactList /> : <Notification />}
+        {isLoading ? (
+          <Loader />
+        ) : error ? (
+          <ErrorNotify message="Failed to load contacts. Please try again." />
+        ) : contacts.length > 0 ? (
+          <ContactList />
+        ) : (
+          <Notification />
+        )}
       </Section>
     </Container>
   );
